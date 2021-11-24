@@ -1,4 +1,5 @@
 const { notEqual } = require('assert')
+const chalk = require('chalk')
 const fs = require('fs')
 // This lesson helps me to create the command to add something in server side like add new user, new account etc. 
 // I thought so. This spent 5 times rewatch this lesson, currently I got it. so great!!! I feel so happy that 
@@ -33,8 +34,15 @@ const removeNote = function(title){
     const notesToKeep = notes.filter(function(note){
         return note.title !== title
     })
-    saveNotes(notesToKeep)
-    console.log("Remove a note!")
+
+    if(notes.length > notesToKeep.length){
+        console.log(chalk.green.inverse('Note removed!'))
+        saveNotes(notesToKeep)
+    }
+    else{
+        console.log(chalk.red.inverse('No note found!'))
+    }
+
 }
 
 const saveNotes = function(notes){
