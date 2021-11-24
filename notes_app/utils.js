@@ -1,3 +1,4 @@
+const { notEqual } = require('assert')
 const fs = require('fs')
 // This lesson helps me to create the command to add something in server side like add new user, new account etc. 
 // I thought so. This spent 5 times rewatch this lesson, currently I got it. so great!!! I feel so happy that 
@@ -25,7 +26,15 @@ const addNote = function(title, body){
     else{
         console.log('Note title taken')
     }
-    
+}
+
+const removeNote = function(title){
+    const notes = loadNotes()
+    const notesToKeep = notes.filter(function(note){
+        return note.title !== title
+    })
+    saveNotes(notesToKeep)
+    console.log("Remove a note!")
 }
 
 const saveNotes = function(notes){
@@ -42,8 +51,12 @@ const loadNotes = function(){
         return []
     }
 }
+
+
+
 module.exports = {
     getNotes: getNotes,
-    addNote: addNote
+    addNote: addNote,
+    removeNote: removeNote
 }
 
