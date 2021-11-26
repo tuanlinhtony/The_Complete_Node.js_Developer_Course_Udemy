@@ -5,6 +5,7 @@ const chalk = require("chalk")
 const nodemon = require("nodemon")
 const yargs = require("yargs")
 
+// Create add command
 yargs.command(
     {
         command:'add',
@@ -26,6 +27,18 @@ yargs.command(
         }
     }
 )
+
+//Create list command
+yargs.command(
+    {
+        command: 'list',
+        describe: 'list all notes',
+        handler(){
+            notes.listNotes()
+        }
+    }
+)
+// Create remove command
 yargs.command(
     {
         command: 'remove',
