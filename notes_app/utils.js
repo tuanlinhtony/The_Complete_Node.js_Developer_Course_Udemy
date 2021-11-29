@@ -13,6 +13,7 @@ const addNote = (title, body) => {
     const notes = loadNotes() //call loadNotes function
     //the varriable to check duplication notes.title
     const duplicateNotes = notes.filter((notes) => notes.title === title)
+    console.log(duplicateNotes)
     // the condition allows write this note to notes.json
     if(duplicateNotes.length === 0){
         notes.push({
@@ -34,6 +35,18 @@ const listNotes = () => {
     })
 }
 
+const readNotes = (title) => {
+    const notes = loadNotes()
+    const note = notes.find((note) => note.title === title)
+    if(note){
+        console.log(chalk.inverse(note.title))
+        console.log(note.body)
+    }
+    else{
+        console.log(chalk.red.inverse('Note not found!'))
+    }
+    
+}
 const removeNote = (title) => {
     const notes = loadNotes()
     const notesToKeep = notes.filter((note) => note.title !== title)
@@ -67,6 +80,7 @@ module.exports = {
     getNotes: getNotes,
     addNote: addNote,
     removeNote: removeNote,
-    listNotes: listNotes
+    listNotes: listNotes,
+    readNotes: readNotes
 }
 

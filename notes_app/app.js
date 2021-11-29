@@ -38,6 +38,25 @@ yargs.command(
         }
     }
 )
+
+// Create reading command
+yargs.command(
+    {
+        command: 'read',
+        describe: 'read your note',
+        builder:{
+            title:{
+                describe: 'Note Title',
+                demandOption: true,
+                type: 'string'
+            }
+        },
+        handler(argv){
+            notes.readNotes(argv.title)
+            console.log('Reading a note')
+        }
+    }
+)
 // Create remove command
 yargs.command(
     {
