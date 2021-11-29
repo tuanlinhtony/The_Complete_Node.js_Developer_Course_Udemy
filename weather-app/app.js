@@ -11,10 +11,14 @@
 // console.log('Stopping')
 
 const request = require('request')
+const geocodeURL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=pk.eyJ1IjoidHVhbmxpbmh0b255IiwiYSI6ImNrd2tsNWtzYzF0NXAzMXFieG1lamUya24ifQ.qUIQEWeJj3b3-QZBZjXjdQ'
 
-const url = 'http://api.weatherstack.com/current?access_key=2c36b2e7e1d2846c6958befb90181c83&query=38.7267,-122.423&units=f'
-request({ url: url }, (error, response) => {
-    const data = JSON.parse(response.body)
-    console.log(data.current.weather_descriptions + " .It is currently " + data.current.temperature 
-    + " degress out. There is a " + data.current.precip + "% chance of rain")    
+request({url:geocodeURL , json : true}, (error, response) => {
+    const lat = response.body.features[0].center[1]
+    const long = response.body.features[0].center[0]
+    const latlong = lat + "," + long
+    console.log(latlong)  
 })
+
+
+
