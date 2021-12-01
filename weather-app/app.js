@@ -1,17 +1,32 @@
-const request = require('request')
-// const geocode = require('./utils.js/geocode.js')
+// const request = require('request')
+const geocode = require('./utils.js/geocode.js')
 const forecast = require('./utils.js/forecast.js')
 
+const address = process.argv[2]
 
-forecast(-75.7088, 44.1545, (error, data) => {
-    console.log('Error', error)
-    console.log('Data', data)
-    const obj = JSON.parse(JSON.stringify(data.forecast)) // ok, hold it down here, and will reseach for understand more later!
-    for(let i in obj){
-        console.log("Date: " + obj[i].date)
-        console.log("Forecast Tempature: " + obj[i].avgtemp)
-    }
-})
+
+if(!address){
+    console.log("Kindly provide an address!!!")
+}else{
+    geocode(address, (error, data) => {
+        if(error){
+            return console.log(error)
+        }
+        forecast(data.long, data.lat, (error, forecastData) => {
+            if(error){
+                return console.log(error)
+            }
+            console.log("Location: " + data.location)
+            const obj = JSON.parse(JSON.stringify(forecastData.forecast)) // ok, hold it down here, and will reseach for understand more later!
+            for(let i in obj){
+                console.log("Date: " + obj[i].date)
+                console.log("Forecast Tempature: " + obj[i].avgtemp + "°C")
+            }
+        })    
+    })
+}
+
+
 
 // node app.js => 
 // http://api.weatherstack.com/forecast?access_key=406a996f605dd6980a559610525a1a75&query=44.1545,-75.7088&units=f

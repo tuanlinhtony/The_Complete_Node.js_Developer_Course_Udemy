@@ -18,14 +18,13 @@ const geocode = (address, callback) => {
     })
 }
 
-geocode("Hanoi",(error, data)=>{
-    console.log("Error", error)
-    console.log("Data", data)
-})
+// geocode("Hanoi",(error, data)=>{
+//     console.log("Error", error)
+//     console.log("Data", data)
+// })
 
-module.exports = {
-    geocode: geocode
-}
+module.exports = geocode
+
 
 
 

@@ -1,7 +1,9 @@
 const request = require('request')
 
+
+
 const forecast = (long, lat, callback ) => {
-    const geocodeURL = 'http://api.weatherstack.com/forecast?access_key=406a996f605dd6980a559610525a1a75&query='+ lat + "," + long + '&units=f'
+    const geocodeURL = 'http://api.weatherstack.com/forecast?access_key=406a996f605dd6980a559610525a1a75&query='+ lat + "," + long + '&units=m'
     console.log(geocodeURL)
     request({url: geocodeURL, json: true},(error, response) => {
         if(error){
