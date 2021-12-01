@@ -1,51 +1,31 @@
-// // Asynchronous Basics
-// console.log('Starting')
-
-// setTimeout(() => {
-//     console.log('Two Second Timer')
-// }, 2000)
-
-// setTimeout(() => {
-//     console.log('Zero Second Timer')
-// }, 0)
-// console.log('Stopping')
-
 const request = require('request')
-// const url = 'http://api.weatherstack.com/current?access_key=2c36b2e7e1d2846c6958befb90181c83&query=&units=f'
-// request({ url: url }, (error, response) => {
-//     const data = JSON.parse(response.body)
-//     if(error){
-//         console.log("Unable to connect to weather service!")
-//     }
-//     else if(data.error)
-//     {
-//         console.log("Unable to find location ")
-//     }
-//     else{
-//         console.log(data.daily.data[0] + " .It is currently " + data.current.temperature 
-//         + " degress out. There is a " + data.current.precip + "% chance of rain") 
-//     }
-       
-// })
+// const geocode = require('./utils.js/geocode.js')
+const forecast = require('./utils.js/forecast.js')
 
-const geocodeURL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=pk.eyJ1IjoidHVhbmxpbmh0b255IiwiYSI6ImNrd2tsNWtzYzF0NXAzMXFieG1lamUya24ifQ.qUIQEWeJj3b3-QZBZjXjdQ'
-// const geocodeURL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/testError.json?access_token=pk.eyJ1IjoidHVhbmxpbmh0b255IiwiYSI6ImNrd2tsNWtzYzF0NXAzMXFieG1lamUya24ifQ.qUIQEWeJj3b3-QZBZjXjdQ'
-request({url:geocodeURL , json : true}, (error, response) => {
-    if(error){
-        console.log("Unable to connect to mapbox service!")
-    }
-    else if(response.body.features.length === 0){
-        console.log("Unable to find this location!")
-    }
-    else{
-        const lat = response.body.features[0].center[1]
-        const long = response.body.features[0].center[0]
-        const latlong = lat + "," + long
-        console.log(latlong)  
-    }
 
-    
+forecast(-75.7088, 44.1545, (error, data) => {
+    console.log('Error', error)
+    console.log('Data', data)
 })
 
+// node app.js => 
+// http://api.weatherstack.com/forecast?access_key=406a996f605dd6980a559610525a1a75&query=44.1545,-75.7088&units=f
+// Error undefined
+// Data {
+//   placename: 'Philadelphia',
+//   forecast: {
+//     '2021-11-30': {
+//       date: '2021-11-30',
+//       date_epoch: 1638230400,
+//       astro: [Object],
+//       mintemp: 19,
+//       maxtemp: 34,
+//       avgtemp: 27,
+//       totalsnow: 2.72,
+//       sunhour: 6.8,
+//       uv_index: 1
+//     }
+//   }
+// }
 
-
+// I am researching a solution that get value of date, mintemp, maxtemp, avgtemp... How???
