@@ -6,6 +6,11 @@ const forecast = require('./utils.js/forecast.js')
 forecast(-75.7088, 44.1545, (error, data) => {
     console.log('Error', error)
     console.log('Data', data)
+    const obj = JSON.parse(JSON.stringify(data.forecast)) // ok, hold it down here, and will reseach for understand more later!
+    for(let i in obj){
+        console.log("Date: " + obj[i].date)
+        console.log("Forecast Tempature: " + obj[i].avgtemp)
+    }
 })
 
 // node app.js => 
@@ -29,3 +34,7 @@ forecast(-75.7088, 44.1545, (error, data) => {
 // }
 
 // I am researching a solution that get value of date, mintemp, maxtemp, avgtemp... How???
+// Got it! I already solved it but still don't understand so deep. 
+// Haizz.. I need some one who can explain to me  more about this issue
+// https://stackoverflow.com/questions/38380462/syntaxerror-unexpected-token-o-in-json-at-position-1?rq=1
+// https://niithanoi.edu.vn/xu-ly-json-trong-javascript.html
