@@ -8,7 +8,7 @@ const address = process.argv[2]
 if(!address){
     console.log("Kindly provide an address!!!")
 }else{
-    geocode(address, (error, data) => {
+    geocode(address, (error, {lat, long, location}) => {
         if(error){
             return console.log(error)
         }
