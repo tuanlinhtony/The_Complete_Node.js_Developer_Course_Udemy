@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 
 app.get('', (request, response) => {
-    response.send("Hello Express!!!!")
+    response.send("<h1>weather</h1>")
 })
 
 app.get("/help", (req, res) => {
@@ -14,7 +14,10 @@ app.get("/about", (req, res) => {
 })
 
 app.get("/weather", (req, res) => {
-    res.send("This is weather page!")
+    res.send({
+        forecast: 'It is snowing',
+        location: 'Philadelphia'
+    })
 })
 
 
