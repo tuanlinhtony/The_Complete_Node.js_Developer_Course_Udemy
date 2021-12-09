@@ -8,15 +8,15 @@ const address = process.argv[2]
 if(!address){
     console.log("Kindly provide an address!!!")
 }else{
-    geocode(address, (error, {lat, long, location}) => {
+    geocode(address, (error, {long, lat, location}) => {
         if(error){
             return console.log(error)
         }
-        forecast(data.long, data.lat, (error, forecastData) => {
+        forecast(long, lat, (error, forecastData) => {
             if(error){
                 return console.log(error)
             }
-            console.log("Location: " + data.location)
+            console.log("Location: " + location)
             const obj = JSON.parse(JSON.stringify(forecastData.forecast)) // ok, hold it down here, and will reseach for understand more later!
             for(let i in obj){
                 console.log("Date: " + obj[i].date)
@@ -41,7 +41,7 @@ if(!address){
 //       mintemp: 19,
 //       maxtemp: 34,
 //       avgtemp: 27,
-//       totalsnow: 2.72,
+//       totalsnow: 2.72, 
 //       sunhour: 6.8,
 //       uv_index: 1
 //     }
