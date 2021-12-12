@@ -1,15 +1,16 @@
 {
-  "name": "web-server",
+  "name": "app.js",
   "version": "1.0.0",
-  "description": "Training with Express",
-  "main": "index.js",
+  "description": "nodejs cousre",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "tony",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "hbs": "^4.2.0",
     "nodemon": "^2.0.15"
   }
 }
