@@ -16,10 +16,11 @@ const partialsPath = path.join(__dirname, '../templates/partials')
 app.set('view engine', 'hbs')
 app.set('views', viewsPath)
 hbs.registerPartials(partialsPath)
+
 // Setup static directory to serve
 app.use(express.static(publicDirectoryPath))
 
-app.get('/', (req, res) => {
+app.get('', (req, res) => {
     res.render('index', {
         title: 'Weather App',
         name: 'Tony'
@@ -46,7 +47,7 @@ app.get("/weather", (req, res) => {
                 for(let i in obj){
                     console.log("Date: " + obj[i].date)
                     console.log("Forecast Tempature: " + obj[i].avgtemp + "°C")
-                    return res.render("weather", {
+                    return res.send({
                         location: location,
                         date: obj[i].date,
                         forecastTemp:  obj[i].avgtemp + "°C",
