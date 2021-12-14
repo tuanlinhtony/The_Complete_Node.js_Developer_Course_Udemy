@@ -1,7 +1,13 @@
-h1{
-    color: red;
+body{
+    color: #666666;
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 650px;
+    margin: 0 auto;
 }
-
-img{
-    width: 200;
+header{
+    margin-top: 16px;
+}
+footer{
+    color: skyblue;
+    border-top: 1px solid #eeeeee;
 }
