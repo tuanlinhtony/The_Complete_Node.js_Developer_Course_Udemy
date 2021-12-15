@@ -36,14 +36,14 @@ app.get("/weather", (req, res) => {
         console.log(req.query.address)
         geocode(req.query.address, (error, {long, lat, location} = {}) => {
             if(error){
-                return res.send(error)
+                return res.send({error})
             }
             forecast(long, lat, (error, forecastData) => {
                 if(error){
-                    return res.send(error)
+                    return res.send({error})
                 }
                 console.log("Location: " + location)
-                const obj = JSON.parse(JSON.stringify(forecastData.forecast)) // ok, hold it down here, and will reseach for understand more later!
+                const obj = JSON.parse(JSON.stringify(forecastData.forecast)) 
                 for(let i in obj){
                     console.log("Date: " + obj[i].date)
                     console.log("Forecast Tempature: " + obj[i].avgtemp + "°C")
