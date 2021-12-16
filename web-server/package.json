@@ -1,16 +1,17 @@
 {
-  "name": "app.js",
+  "name": "weather_app",
   "version": "1.0.0",
   "description": "nodejs cousre",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
     "hbs": "^4.2.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "postman-request": "^2.88.1-postman.30"
   }
 }
