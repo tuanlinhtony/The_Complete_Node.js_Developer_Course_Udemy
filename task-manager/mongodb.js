@@ -1,10 +1,14 @@
 // CRUD create read update delete
 // Currently, I am using the MongoDB ver 3.6.23
+const { ObjectID } = require('bson')
 const {MongoClient, ObjectId } = require('mongodb')
-
 
 const connectionURL = 'mongodb://127.0.0.1:27017'
 const databaseName = 'task-manager'
+
+// const id = new ObjectID()
+// console.log(id)
+// console.log(id.getTimestamp())
 
 MongoClient.connect(connectionURL, { useNewUrlParser: true} , (error, client) => {
     if(error){
@@ -13,46 +17,95 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true} , (error, client) =>
     console.log('MongoDB connected')
     const db =client.db(databaseName)
 
+    // querry many result with the condition
+    db.collection('tasks').find({'completed': false}).toArray((error, task) => {
+        if(error){
+            return console.log('Unable to fetch')
+        }else{
+            console.log(task)
+        }
+    })
+
+    // // querry many result with the condition then return counts of result
+    // db.collection('users').find({'age': 31}).count((error, count) => {
+    //     if(error){
+    //         return console.log('Unable to fetch')
+    //     }else{
+    //         console.log(count)
+    //     }
+    // })
+
+    // // querry only one result with the condition
+    // db.collection('users').findOne({'_id':new ObjectID('61bdc2f9f8a5e4d2040ec7ca')},  (error, user) => {
+    //     if(error){
+    //         return console.log('Unable to fetch')
+    //     }
+    //     console.log(user)
+    // })
+    // db.collection('users').findOne({'name':'Virgin', 'age' : 1},  (error, user) => {
+    //     if(error){
+    //         return console.log('Unable to fetch')
+    //     }
+    //     console.log(user)
+    // })
+
+    // // insert only one document to Mongo Database
     // db.collection('users').insertOne({
-    //     _id:0001,
-    //     name: 'Olli',
-    //     age: 31
+    //     _id: id,
+    //     name: 'Calsi',
+    //     age: 29
     // }, (error, result) =>{
     //     if(error){
     //         console.log('Unable insert to database')
     //     }     
-    //     console.log(result.insertedId)      
+    //     const insertDoc = result.insertedId
+    //     console.log(result.insertedId)
+    //     async function getItem(insertDoc){
+    //         const filteredDocs = await db.collection('users').find(insertDoc).toArray()
+    //         return  console.log(filteredDocs)
+    //     }
+    //     getItem(insertDoc)
+        
     // })
 
-    db.collection('admin').insertMany([
-        {   
-            description: 'test01',
-            completed: true
-        },
-        {   
-            description: 'test02',
-            completed: false
-        },
-        {   
-            description: 'test03',
-            completed: true
-        }
-    ], (error, result)=> {
-        if(error){
-            return console.log('Unable to insert document')
-        }
+    // // insert many documents to Mongo Database
+    // db.collection('tasks').insertMany([
+    //     {   
+    //         description: 'Study English',
+    //         completed: true
+    //     },
+    //     {   
+    //         description: 'Study French',
+    //         completed: false
+    //     },
+    //     {   
+    //         description: 'Study Russian',
+    //         completed: true
+    //     },
+    //     {   
+    //         description: 'Study Japanese',
+    //         completed: false
+    //     },
+    //     {   
+    //         description: 'Study Chinese',
+    //         completed: false
+    //     }
+    // ], (error, result)=> {
+    //     if(error){
+    //         return console.log('Unable to insert document')
+    //     }
+
+    //     async function getItem(insertedIds){
+    //         const filteredDocs = await db.collection('admin').find(insertedIds).toArray()
+    //         return  console.log(filteredDocs)
+    //     }
         
-        async function getItem(insertedIds){
-            const filteredDocs = await db.collection('admin').find(insertedIds).toArray()
-            return  console.log(filteredDocs)
-        }
+    //     Object.keys(result.insertedIds).forEach((item) => {
+    //         console.log(item, result.insertedIds[item]);
+    //         getItem(result.insertedIds[item])
+    //     })
         
-        Object.keys(result.insertedIds).forEach((item) => {
-            console.log(item, result.insertedIds[item]);
-            getItem(result.insertedIds[item])
-        })
-        
-    })  
+    // })  
     
 })
 
