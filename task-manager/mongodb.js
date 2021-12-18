@@ -1,7 +1,7 @@
 // CRUD create read update delete
 // Currently, I am using the MongoDB ver 3.6.23
-const mongodb = require('mongodb')
-const MongoClient = mongodb.MongoClient
+const {MongoClient, ObjectId } = require('mongodb')
+
 
 const connectionURL = 'mongodb://127.0.0.1:27017'
 const databaseName = 'task-manager'
@@ -26,22 +26,33 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true} , (error, client) =>
 
     db.collection('admin').insertMany([
         {   
-            description: 'ransokl dinsll iiwhsnal',
+            description: 'test01',
             completed: true
         },
         {   
-            description: 'ransokl iklsijlaw jklllaa',
+            description: 'test02',
             completed: false
         },
         {   
-            description: 'ransokl vallial ouwkjhc',
+            description: 'test03',
             completed: true
         }
     ], (error, result)=> {
         if(error){
             return console.log('Unable to insert document')
         }
-         console.log(result)
-    })   
+        
+        async function getItem(insertedIds){
+            const filteredDocs = await db.collection('admin').find(insertedIds).toArray()
+            return  console.log(filteredDocs)
+        }
+        
+        Object.keys(result.insertedIds).forEach((item) => {
+            console.log(item, result.insertedIds[item]);
+            getItem(result.insertedIds[item])
+        })
+        
+    })  
+    
 })
 
