@@ -16,15 +16,41 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true} , (error, client) =>
     }
     console.log('MongoDB connected')
     const db =client.db(databaseName)
-
-    // querry many result with the condition
-    db.collection('tasks').find({'completed': false}).toArray((error, task) => {
-        if(error){
-            return console.log('Unable to fetch')
-        }else{
-            console.log(task)
+    
+    // querry to completed is false in tasks then update many them to true 
+    db.collection('tasks').updateMany({
+        completed: false
+    }, {
+        $set: {
+            completed: true
         }
+    }).then((result) => {
+        console.log(result)
+    }).catch((error)=> {
+        console.log(error)
     })
+
+    // // Update document
+    // db.collection('users').updateOne({
+    //     _id: new ObjectId("61bd86b143cd4ed613c7bbc7")
+    // }, {
+    //     $inc: {
+    //         age: 2
+    //     }
+    // }).then((result) => {
+    //     console.log(result)
+    // }).catch((error)=> {
+    //     console.log(error)
+    // })
+
+    // // querry many result with the condition
+    // db.collection('tasks').find({'completed': false}).toArray((error, task) => {
+    //     if(error){
+    //         return console.log('Unable to fetch')
+    //     }else{
+    //         console.log(task)
+    //     }
+    // })
 
     // // querry many result with the condition then return counts of result
     // db.collection('users').find({'age': 31}).count((error, count) => {
@@ -100,10 +126,10 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true} , (error, client) =>
     //         return  console.log(filteredDocs)
     //     }
         
-    //     Object.keys(result.insertedIds).forEach((item) => {
-    //         console.log(item, result.insertedIds[item]);
-    //         getItem(result.insertedIds[item])
-    //     })
+        // Object.keys(result.insertedIds).forEach((item) => {
+        //     console.log(item, result.insertedIds[item]);
+        //     getItem(result.insertedIds[item])
+        // })
         
     // })  
     
