@@ -16,19 +16,27 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true} , (error, client) =>
     }
     console.log('MongoDB connected')
     const db =client.db(databaseName)
-    
-    // querry to completed is false in tasks then update many them to true 
-    db.collection('tasks').updateMany({
-        completed: false
-    }, {
-        $set: {
-            completed: true
-        }
-    }).then((result) => {
-        console.log(result)
-    }).catch((error)=> {
-        console.log(error)
-    })
+    // // Delete document
+    // db.collection('users').deleteMany({
+    //     age:160
+    // }).then((result) => {
+    //     console.log(result.deletedCount)
+    // }).catch((error) => {
+    //     console.log(error)
+    // })
+
+    // // querry to completed is false in tasks then update many them to true 
+    // db.collection('tasks').updateMany({
+    //     completed: false
+    // }, {
+    //     $set: {
+    //         completed: true
+    //     }
+    // }).then((result) => {
+    //     console.log(result)
+    // }).catch((error)=> {
+    //     console.log(error)
+    // })
 
     // // Update document
     // db.collection('users').updateOne({
