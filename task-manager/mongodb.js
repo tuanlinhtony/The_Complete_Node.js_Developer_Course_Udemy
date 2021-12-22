@@ -15,8 +15,8 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true} , (error, client) =>
         return console.log('Unable to connect to database' + error)
     }
     console.log('MongoDB connected')
-    const db =client.db(databaseName)
-
+    const db = client.db(databaseName)
+    // Delete the description 
     // // Delete document
     // db.collection('users').deleteMany({
     //     age:160
