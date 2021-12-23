@@ -5,19 +5,19 @@ mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
     useUnifiedTopology: true 
 })
 
-// Create a model for tasks with validation
-const Task = mongoose.model('Tasks', {
-    description: {
-        type: String,
-        require: true,
-        trim: true,
-        minlength: 1    
-    },
-    completed:{
-        type: Boolean,
-        default: false
-    }
-})
+// // Create a model for tasks with validation
+// const Task = mongoose.model('Tasks', {
+//     description: {
+//         type: String,
+//         require: true,
+//         trim: true,
+//         minlength: 1    
+//     },
+//     completed:{
+//         type: Boolean,
+//         default: false
+//     }
+// })
 
 // const task = new Task({
 //     description: '  test  '

@@ -6,11 +6,11 @@ const User = mongoose.model('User', {
     name: {
         type: String,
         minlength: 4,
-        require: true
+        required: true
     },
     email: {
         type: String,
-        require: true,
+        required: true,
         validate(email){
             if(!validator.isEmail(email)){
                throw new Error('Email is invalid') 
@@ -24,14 +24,14 @@ const User = mongoose.model('User', {
         default: 0,
         validate(value) {
             if(value <= 0){
-                throw new Error('Ag must be a postive number')
+                throw new Error('Age must be a postive number')
             }
         }
     },
     //make password field with require string, greater 6 characters, trim space, not contain "password"
     password : {
         type : String,
-        require: true,
+        required: true,
         minlength: 7,
         validate(password){
             if(password.toLowerCase().includes('password')){
