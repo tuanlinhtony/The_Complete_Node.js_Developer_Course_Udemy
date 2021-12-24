@@ -52,6 +52,28 @@ app.post('/tasks', (req,res) => {
     })
 })
 
+// Create api for find all tasks
+app.get("/tasks", (req,res) => {
+    Task.find({}).then((tasks) =>{
+        res.send(tasks)
+    }).catch((e) => {
+        res.send(e)
+    })
+})
+
+// Create api for find a task by id
+app.get("/tasks/:id", (req,res) => {
+    const _id = req.params.id
+    Task.findById(_id).then((task) =>{
+        if(!task){
+            return res.status(404).send()
+        }
+        res.send(task)
+    }).catch((e) => {
+        res.status(500).send(e)
+    })
+})
+
 app.listen(port, () => {
     console.log('Sever is up on port:' + port )
 })
