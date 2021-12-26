@@ -97,6 +97,19 @@ app.patch("/users/:id", async (req,res) =>{
     }
 })
 
+// Delete a user with id
+app.delete('/users/:id', async (req,res) => {
+    try {
+        const user = await User.findByIdAndDelete(req.params.id)
+        if(!user){
+            return res.status(404).send('Not found this user')
+        }
+        res.status(200).send(user)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
+
 // Create a new task
 app.post('/tasks', async (req,res) => {
     const task = new Task(req.body)
@@ -180,6 +193,19 @@ app.patch("/tasks/:id", async (req,res) => {
     }
 })
 
+// Delete a task by id
+app.delete('/tasks/:id', async (req,res) => {
+    try {
+        const task = await Task.findByIdAndDelete(req.params.id)
+        if(!task){
+            return res.status(404).send('Not found this task'),
+            console.log('Not found this task')
+        }
+        res.status(200).send(task)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
 app.listen(port, () => {
     console.log('Sever is up on port:' + port )
 })
