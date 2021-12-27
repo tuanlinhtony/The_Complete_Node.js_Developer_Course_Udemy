@@ -1,8 +1,7 @@
 const mongoose = require('mongoose')
 const  validator = require('validator')
-
-// Insert document with Mongoose
-const User = mongoose.model('User', {
+const bcrypt = require('bcryptjs')
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         minlength: 4,
@@ -40,6 +39,19 @@ const User = mongoose.model('User', {
         },
         trim: true,
     }
- })
+})
+
+userSchema.pre('save', async function(next){
+    const user = this
+
+    if(user.isModified('password')){
+        user.password = await bcrypt.hash(user.password, 8)
+    }
+    next()
+})
+
+
+// Insert document with Mongoose
+const User = mongoose.model('User', userSchema)
 
 module.exports = User
