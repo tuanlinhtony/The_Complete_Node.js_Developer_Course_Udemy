@@ -3,7 +3,7 @@ const mongoose = require('./db/mongoose')
 
 const userRouter = require('./routers/user')
 const taskRouter = require('./routers/task')
-const auth = require('./middleware/auth')
+
 const app = express()
 const port = process.env.PORT || 3000
 
@@ -21,17 +21,31 @@ app.listen(port, () => {
     console.log('Sever is up on port:' + port )
 })
 
-const jwt = require('jsonwebtoken')
+const Task = require('./models/task')
+const User = require('./models/user')
 
-const myFunction = async () => {
-    const token = jwt.sign({_id : 'abc123'}, 'thisisjsonwebtoken', {expiresIn: '5 seconds' })
-    console.log(token)
+const main = async ()=>{
+    // const task = await Task.findById('61d16b64485decb3d4d0e623')
+    // await task.populate('owner')
+    // console.log(task.owner)
 
-    const data = jwt.verify(token, 'thisisjsonwebtoken')
-    console.log(data)
+    const user = await User.findById('61d16998966c8e0547d98115')
+    await user.populate('tasks')
+    console.log(user.tasks)
 }
 
-myFunction()
+main()
+// const jwt = require('jsonwebtoken')
+
+// const myFunction = async () => {
+//     const token = jwt.sign({_id : 'abc123'}, 'thisisjsonwebtoken', {expiresIn: '5 seconds' })
+//     console.log(token)
+
+//     const data = jwt.verify(token, 'thisisjsonwebtoken')
+//     console.log(data)
+// }
+
+// myFunction()
 
 
 // const myFunction = async () => {

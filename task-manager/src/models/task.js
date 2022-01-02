@@ -1,10 +1,13 @@
 const mongoose = require('mongoose')
 const  validator = require('validator')
 
-const taskSchema = new mongoose.Schema()
+const taskSchema = new mongoose.Schema(
+
+
+)
 
 // Create a model for tasks with validation
-const Task = mongoose.model('Tasks', {
+const Task = mongoose.model('Task', {
     description: {
         type: String,
         required: true,
@@ -14,6 +17,11 @@ const Task = mongoose.model('Tasks', {
     completed:{
         type: Boolean,
         default: false
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref : 'User'
     }
 })
 

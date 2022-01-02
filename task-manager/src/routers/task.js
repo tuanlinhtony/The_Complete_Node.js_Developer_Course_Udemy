@@ -1,10 +1,14 @@
 const express = require('express')
 const router = new express.Router()
 const Task = require('../models/task')
-
+const auth = require('../middleware/auth')
 // Create a new task
-router.post('/tasks', async (req,res) => {
-    const task = new Task(req.body)
+router.post('/tasks', auth, async (req,res) => {
+   
+    const task = new Task({
+        ...req.body,
+        owner: req.user._id
+    })
 
     //refactor with async/await
     try{
@@ -101,5 +105,6 @@ router.delete('/tasks/:id', async (req,res) => {
         res.status(500).send(error)
     }
 })
+
 
 module.exports = router
