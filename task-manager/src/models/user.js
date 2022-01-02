@@ -84,8 +84,6 @@ userSchema.statics.findByCredentials = async (email, password) => {
     }
 
     return user
-
-
 }
 
 // Hash the plain text pass before saving

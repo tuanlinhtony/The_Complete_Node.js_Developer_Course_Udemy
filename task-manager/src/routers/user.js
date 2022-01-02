@@ -2,6 +2,7 @@ const express = require('express')
 const router = new express.Router()
 const User = require('../models/user')
 const auth = require('../middleware/auth')
+
 // Add new user
 router.post('/users', async (req,res) => {
     const user = new User(req.body)
@@ -67,7 +68,7 @@ router.get('/users/:id', async (req,res) => {
 })
 
 // Update a user with id
-router.patch("/users/:id", async (req,res) =>{
+router.patch("/users/me", auth, async (req,res) =>{
     const id = req.params.id
 
     const updates = Object.keys(req.body)
@@ -79,29 +80,23 @@ router.patch("/users/:id", async (req,res) =>{
     }
 
     try {
-        const user = await User.findById(req.params.id)
-
-        updates.forEach((update) => {user[update] = req.body[update]})
-        await user.save()
-        // const user = await User.findByIdAndUpdate(id, req.body, { new: true, runValidator: true})
-        if(!user){
-            return res.status(404).send(),
-            console.log("Can't find any user with this id")
-        }
-        res.send(user)
+        updates.forEach((update) => req.user[update] = req.body[update])
+        await req.user.save()
+        res.send(req.user)
     } catch (error) {
         res.status(400).send(error)
     }
 })
 
 // Delete a user with id
-router.delete('/users/:id', async (req,res) => {
+router.delete('/users/me', auth, async (req,res) => {
     try {
-        const user = await User.findByIdAndDelete(req.params.id)
-        if(!user){
-            return res.status(404).send('Not found this user')
-        }
-        res.status(200).send(user)
+        // const user = await User.findByIdAndDelete(req.params.id)
+        // if(!user){
+        //     return res.status(404).send('Not found this user')
+        // }
+        await req.user.remove()
+        res.status(200).send(req.user)
     } catch (error) {
         res.status(500).send(error)
     }
@@ -112,9 +107,10 @@ router.post('/users/login' , async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
+        
         res.send({user, token})
     } catch (error) {
-        res.status(400).send()
+        res.status(400).send(error)
     }
 })
 
