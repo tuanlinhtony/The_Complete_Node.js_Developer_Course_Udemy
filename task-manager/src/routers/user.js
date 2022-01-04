@@ -24,7 +24,7 @@ router.get('/users', async (req,res) => {
     try{
         const users = await User.find({})
         res.status(201).send(users)
-        console.log('Find all results')
+        // console.log('Find all results')
     }catch(e){
         res.status(500).send(e.message)
     }
@@ -43,7 +43,7 @@ router.get('/users/me', auth,  async (req,res) => {
 
 // Find a user with ID
 router.get('/users/:id', async (req,res) => {
-    console.log(req.params)
+    // console.log(req.params)
     const _id = req.params.id
     //refactor with async/await
     try{
@@ -52,7 +52,7 @@ router.get('/users/:id', async (req,res) => {
             return res.status(404).send()
         }
         res.status(201).send(user)
-        console.log('Found a result')
+        // console.log('Found a result')
     }catch(e){
         res.status(500).send(e.message)
     }
