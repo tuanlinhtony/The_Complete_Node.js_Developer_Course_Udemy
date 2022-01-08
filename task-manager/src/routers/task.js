@@ -47,7 +47,6 @@ router.get("/tasks", auth, async (req,res) => {
                 sort
             }
         })
-        
         console.log(task)
         res.send(req.user.tasks)
     } catch (e) {
@@ -118,6 +117,5 @@ router.delete('/tasks/:id', auth, async (req,res) => {
         res.status(500).send(error)
     }
 })
-
 
 module.exports = router
