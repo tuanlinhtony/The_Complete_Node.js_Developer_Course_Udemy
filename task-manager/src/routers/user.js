@@ -1,5 +1,6 @@
 const express = require('express')
 const { sendWelcomeEmail } = require('../emails/account')
+const { sendCancelationEmail } = require('../emails/account')
 const router = new express.Router()
 const User = require('../models/user')
 const auth = require('../middleware/auth')
@@ -101,6 +102,7 @@ router.delete('/users/me', auth, async (req,res) => {
         //     return res.status(404).send('Not found this user')
         // }
         await req.user.remove()
+        sendCancelationEmail(req.user.email, req.user.name)
         res.status(200).send(req.user)
     } catch (error) {
         res.status(500).send(error)
