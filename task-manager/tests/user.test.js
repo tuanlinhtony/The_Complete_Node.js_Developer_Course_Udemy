@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 const app = require('../src/app')
 const User = require('../src/models/user')
+const { response } = require('../src/app')
 
 const userOneId = new mongoose.Types.ObjectId() 
 const userOne = {
@@ -22,20 +23,37 @@ beforeEach(async () => {
 
 //Test register a new user
 test('Should signup a new user', async () => {
-    await request(app).post('/users').send({
+    const response = await request(app).post('/users').send({
         name: "Alena",
         email :  "tonyvnpsp12@gmail.com",
         age : "33",
         password: "test123456"
     }).expect(201)
+
+    //Assert that ther database was changed correctly
+    const user = await User.findById(response.body.user._id)
+    expect(user).not.toBeNull()
+
+    //Assertions about the response
+    expect(response.body).toMatchObject({
+        user: {
+            name: "Alena",
+            email: "tonyvnpsp12@gmail.com"
+        },
+        token: user.tokens[0].token
+    })
+    expect(user.password).not.toBe('test123456')
 })
 
 //Test login
 test('Should login existing user', async () => {
-    await ( request(app).post('/users/login')).send({
+    const response = await ( request(app).post('/users/login')).send({
         email :  userOne.email,
         password: userOne.password
-    })
+    }).expect(200)
+
+    const user = await User.findById(userOneId)
+    expect(response.body.token).toBe(user.tokens[1].token)
 })
 
 //Test failure login if wrong authencation
@@ -66,11 +84,15 @@ test('Should get profile for user', async () =>{
 
 //Test delete account
 test('Should delete account for user', async () =>{
-    await request(app)
+    const response = await request(app)
     .delete('/users/me')
     .set('Authorization', 'Bearer ' + userOne.tokens[0].token)
     .send()
     .expect(200)
+
+    //Assert that ther database was changed correctly
+    const user = await User.findById(userOneId)
+    expect(user).toBeNull()
 })
 
 //Test not allow to delete account if wrong authencation
