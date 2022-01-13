@@ -102,3 +102,42 @@ test('Should delete account for user', async () =>{
     .send()
     .expect(401)
 })
+
+//Test upload file
+test('Should upload avatar image', async () => {
+    await request(app)
+    .post('/users/me/avatar')
+    .set('Authorization', 'Bearer ' + userOne.tokens[0].token)
+    .attach('avatar','tests/fixtures/profile-pic.jpg')
+    .expect(200)
+
+    const user = await User.findById(userOneId)
+    expect(user.avatar).toEqual(expect.any(Buffer))
+})
+
+//Test update valid the name of the test user
+test('Should update valid user fields', async () => {
+    await request(app)
+    .patch('/users/me')
+    .set('Authorization', 'Bearer ' + userOne.tokens[0].token)
+    .send({
+        name: 'Jace'
+    })
+    .expect(200)
+
+    const user = await User.findById(userOneId)
+    expect(user.name).toEqual('Jace')
+})
+
+//Test update unvalid the name of the test user
+test('Should update valid user fields', async () => {
+    await request(app)
+    .patch('/users/me')
+    .set('Authorization', 'Bearer ' + userOne.tokens[0].token)
+    .send({
+        location: 'Ha Noi'
+    })
+    .expect(400)
+
+   
+})
