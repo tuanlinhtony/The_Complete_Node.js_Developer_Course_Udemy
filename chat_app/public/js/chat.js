@@ -8,6 +8,8 @@ const $sendLocationButton = document.querySelector('#send-location')
 const $messages = document.querySelector('#messages')
 
 const messageTemplate = document.querySelector('#message-template').innerHTML
+const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML
+
 
 socket.on('message', (message) => {
     console.log(message)
@@ -17,7 +19,15 @@ socket.on('message', (message) => {
     $messages.insertAdjacentHTML('beforeend', html)
 })
 
-document.querySelector('#message-form').addEventListener('submit', (e) =>{
+socket.on('locationMessage', (url) => {
+    console.log(url)
+    const html = Mustache.render(locationMessageTemplate, {
+        url: url
+    })
+    $messages.insertAdjacentHTML('beforeend', html)
+})
+
+$messageForm.addEventListener('submit', (e) =>{
     e.preventDefault()
     // disable form send
     $messageFormButton.setAttribute('disabled','disabled' )
@@ -33,8 +43,6 @@ document.querySelector('#message-form').addEventListener('submit', (e) =>{
         console.log('Message delivered!')
     })
 })
-
-
 
 $sendLocationButton.addEventListener('click', () => {
     if(!navigator.geolocation){
@@ -54,12 +62,3 @@ $sendLocationButton.addEventListener('click', () => {
         })
     })
 })
-
-// socket.on('countUpdated', (count) => {
-//     console.log('the count has been updated', count)
-// })
-
-// document.querySelector('#increment').addEventListener('click', () => {
-//     console.log('Clicked')
-//     socket.emit('increment')
-// })

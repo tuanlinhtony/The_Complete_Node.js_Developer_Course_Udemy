@@ -20,17 +20,15 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('message', 'A new user has joined!')
     socket.on('sendMessage', (message, callback) =>{
         const filter = new Filter()
-
         if(filter.isProfane(message)){
             return callback('Profanity is not allow!')
         }
-
         io.emit('message', message)
         callback()
     })
 
     socket.on('sendLocation', (position, callback) => {
-        io.emit('message', 'https://google.com/maps?q=' + position.latitude + ',' + position.longitude)
+        io.emit('locationMessage', 'https://google.com/maps?q=' + position.latitude + ',' + position.longitude)
         callback()
     })
 
